@@ -1,29 +1,57 @@
 import React, { useState, useEffect } from "react";
-import PeriodForm from "./components/PeriodForm";
-import PeriodHistory from "./components/PeriodHistory";
-import PeriodInfo from "./components/PeriodInfo";
 
 const App = () => {
-  const [periods, setPeriods] = useState(() => {
-    const stored = localStorage.getItem("periodHistory");
-    return stored ? JSON.parse(stored) : [];
-  });
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [periods, setPeriods] = useState([]);
 
-  useEffect(() => {
-    localStorage.setItem("periodHistory", JSON.stringify(periods));
-  }, [periods]);
-
-  const addPeriod = (startDate, endDate) => {
-    const newPeriod = { startDate, endDate, id: Date.now() };
-    setPeriods([newPeriod, ...periods]);
+  const fetchPeriods = async () => {
+    const res = await fetch("http://localhost:5000/history");
+    const data = await res.json();
+    setPeriods(data);
   };
 
+  const addPeriod = async (e) => {
+    e.preventDefault();
+    if (!startDate || !endDate) return;
+
+    await fetch("http://localhost:5000/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ startDate, endDate })
+    });
+
+    setStartDate("");
+    setEndDate("");
+    fetchPeriods(); // refresh
+  };
+
+  useEffect(() => {
+    fetchPeriods();
+  }, []);
+
   return (
-    <div className="max-w-3xl mx-auto p-4 font-sans">
-      <h1 className="text-4xl font-bold mb-6 text-pink-600 text-center">🌸 Period Tracker</h1>
-      <PeriodInfo />
-      <PeriodForm onAdd={addPeriod} />
-      <PeriodHistory periods={periods} />
+    <div className="container">
+      <h1>🌸 Period Tracker</h1>
+
+      <form onSubmit={addPeriod}>
+        <label>Start Date:</label>
+        <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+
+        <label>End Date:</label>
+        <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+
+        <button type="submit">Add</button>
+      </form>
+
+      <h2>History</h2>
+      <ul>
+        {periods.map((period) => (
+          <li key={period.id}>
+            <strong>Start:</strong> {period.startDate} | <strong>End:</strong> {period.endDate}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
