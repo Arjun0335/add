@@ -4,13 +4,13 @@ import "./styles.css"; // optional if using custom CSS
 const initialData = [
   {
     id: 1,
-    startDate: "2025-06-01",
-    endDate: "2025-06-05",
+    startDate: "2025-06-03",
+    endDate: "2025-06-08",
   },
   {
     id: 2,
-    startDate: "2025-07-01",
-    endDate: "2025-07-06",
+    startDate: "2025-05-03",
+    endDate: "2025-05-08",
   },
 ];
 
@@ -34,11 +34,11 @@ const App = () => {
 
   return (
     <div style={styles.wrapper}>
-      <h1 style={styles.heading}>🌹 My Period Journal 💖</h1>
+      <h1 style={styles.heading}>🌹 My Vanii Period Journal 💖</h1>
 
       <div style={styles.introBox}>
         <p style={styles.text}>
-          Hello lovely! 🌸 This is your safe space to track your moon cycle 🌙.
+          Hello lovely! 🌸 This is your safe space to track your period cycle 🌙.
           Every period is a natural, beautiful rhythm of your body 💗. Let's log your
           journey with care, love, and some sparkles ✨.
         </p>
@@ -66,7 +66,7 @@ const App = () => {
         </button>
       </form>
 
-      <h2 style={styles.subheading}>🩸 My Period History</h2>
+      <h2 style={styles.subheading}>🩸 Yours Period History</h2>
       <ul style={styles.list}>
         {periods.map((p) => (
           <li key={p.id} style={styles.listItem}>
@@ -79,11 +79,11 @@ const App = () => {
         <h3>💡 Did you know?</h3>
         <ul>
           <li>• Periods are part of your natural hormonal cycle 🧬</li>
-          <li>• Cramps and mood swings are totally normal ❤️</li>
+          <li>• Cramps and mood swings are totally normal and there is nothing baby to take tension, you are very strong girl❤️</li>
           <li>• Tracking helps understand your flow and health 🌺</li>
         </ul>
         <p style={styles.quote}>
-          "Your body is poetry in motion. Love it. Respect it. Celebrate it." 🌙
+          "You are my love and i will do anything and everything for you ." 🌙
         </p>
       </div>
     </div>
